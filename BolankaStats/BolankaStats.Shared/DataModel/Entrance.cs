@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BolankaStats.Common;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,5 +7,27 @@ namespace BolankaStats.DataModel
 {
     class Entrance
     {
+        public string UniqueId { get; private set; }
+        public DateTime Date { get; private set; }
+        public string DeviceId { get; private set; }
+        public int PeopleNumber{ get; private set; }
+        public bool Entered{ get; private set; }
+
+        public Entrance(String UniqueId, DateTime Date, string DeviceId, int PeopleNumber, bool Entered)
+        {
+            this.UniqueId = UniqueId;
+            this.Date = Date;
+            this.DeviceId = DeviceId;
+            this.PeopleNumber = PeopleNumber;
+            this.Entered = Entered;
+        }
+        public Entrance(DateTime Date, int PeopleNumber, bool Entered)
+        {
+
+            this.DeviceId = CommonHelper.DEVICE_ID;
+            this.Date = Date;
+            this.PeopleNumber = PeopleNumber;
+            this.Entered = Entered;
+        }
     }
 }

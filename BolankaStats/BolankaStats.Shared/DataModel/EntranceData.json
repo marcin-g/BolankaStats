@@ -1,0 +1,21 @@
+{"Entrances":[
+    {
+        "UniqueId": "1",
+        "Date": "01/06/2013 12:32:00",
+        "DeviceId": "22222",
+        "PeopleNumber": 2,
+        "Entered": true
+        
+
+    },
+    {
+       
+        "UniqueId": "2",
+        "Date": "02/06/2013 12:32:00",
+        "DeviceId": "22222",
+        "PeopleNumber": 3,
+        "Entered": false
+
+    }
+]
+}
