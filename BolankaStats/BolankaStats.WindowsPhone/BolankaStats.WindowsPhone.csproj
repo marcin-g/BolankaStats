@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{a177d539-07ed-40b3-93e4-fc5a7e6a1227}</ProjectGuid>
+    <ProjectGuid>{A177D539-07ED-40B3-93E4-FC5A7E6A1227}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BolankaStats</RootNamespace>
@@ -82,7 +82,10 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
-  <ItemGroup>    
+  <ItemGroup>
+    <Compile Include="EntrancePage.xaml.cs">
+      <DependentUpon>EntrancePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HubPage.xaml.cs">
       <DependentUpon>HubPage.xaml</DependentUpon>
     </Compile>
@@ -110,6 +113,10 @@
     <Content Include="Assets\HubBackground.theme-light.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="EntrancePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="HubPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -127,7 +134,7 @@
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="..\BolankaStats.Shared\BolankaStats.Shared.projitems" Label="Shared" />
-    <PropertyGroup Condition=" '$(TargetPlatformIdentifier)' == '' ">
+  <PropertyGroup Condition=" '$(TargetPlatformIdentifier)' == '' ">
     <TargetPlatformIdentifier>WindowsPhoneApp</TargetPlatformIdentifier>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />

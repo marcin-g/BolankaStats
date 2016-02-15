@@ -72,10 +72,13 @@
 
     <Grid x:Name="LayoutRoot">
         <Hub x:Name="Hub" x:Uid="Hub" Header="application name" Background="{ThemeResource HubBackgroundImageBrush}">
-            <HubSection x:Uid="HubSection1" Header="SECTION 1" DataContext="{Binding Groups}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
+            <HubSection x:Uid="HubSection1" Header="SECTION 1"  HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
+           
+                </DataTemplate>
+                        <!--DataTemplate>
                     <ListView
-                        ItemsSource="{Binding}"
+                        ItemsSource="{Binding Items}"
                         IsItemClickEnabled="True"
                         ItemClick="GroupSection_ItemClick"
                         ContinuumNavigationTransitionInfo.ExitElementContainer="True">
@@ -87,9 +90,31 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                </DataTemplate-->
+                
+            </HubSection>
+            <HubSection x:Uid="HubSection4" Header="SECTION Test"
+                        DataContext="{Binding Entrances}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
+                <DataTemplate>
+                    <ListView 
+                        AutomationProperties.AutomationId="ItemListViewSection4"
+                        AutomationProperties.Name="Items In Group"
+                        SelectionMode="None"
+                        ItemsSource="{Binding}"
+                        IsItemClickEnabled="True"
+                        ItemClick="ItemView_ItemClick"
+                        ContinuumNavigationTransitionInfo.ExitElementContainer="True">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,19">
+                                    <TextBlock Text="{Binding DeviceId}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
+                                    <TextBlock Text="{Binding PeopleNumber}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </DataTemplate>
             </HubSection>
-
             <HubSection x:Uid="HubSection2" Header="SECTION 2" Width="Auto"
                          DataContext="{Binding Groups[0]}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
@@ -150,6 +175,8 @@
                     </ListView>
                 </DataTemplate>
             </HubSection>
+            
+            
 
             <HubSection x:Uid="HubSection5" Header="SECTION 5"
                         DataContext="{Binding Groups[3]}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
@@ -168,4 +195,14 @@
             </HubSection>
         </Hub>
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar IsSticky="True" x:Name="appBar">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Icon="Add" Click="AppBarButton_Click" />
+            </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Help"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

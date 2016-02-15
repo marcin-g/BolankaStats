@@ -31,6 +31,7 @@ namespace BolankaStats
     public sealed partial class HubPage : Page
     {
         private readonly NavigationHelper navigationHelper;
+        private StatsClient client = new StatsClient(); 
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("Resources");
 
@@ -81,6 +82,8 @@ namespace BolankaStats
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
             var sampleDataGroups = await SampleDataSource.GetGroupsAsync();
             this.DefaultViewModel["Groups"] = sampleDataGroups;
+            var entrances = await client.GetEntrances(); 
+            this.DefaultViewModel["Entrances"] = entrances;
         }
 
         /// <summary>
@@ -149,5 +152,10 @@ namespace BolankaStats
         }
 
         #endregion
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(EntrancePage));
+        }
     }
 }
