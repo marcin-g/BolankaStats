@@ -13,7 +13,7 @@ namespace BolankaStats.Common
     class StatsClient
     {
         private HttpClient _client = new HttpClient();
-        private static string ENDPOINT = "http://www.peka.poznan.pl/vm/method.vm";
+        private static string ENDPOINT = "http://pool-stats.app-get.co";
         
         private ObservableCollection<Entrance> _entrances = new ObservableCollection<Entrance>();
 
@@ -52,10 +52,10 @@ namespace BolankaStats.Common
             _entrances = new ObservableCollection<Entrance>();
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
             string jsonText = await FileIO.ReadTextAsync(file);
-            JsonObject jsonObject = JsonObject.Parse(jsonText);
-            JsonArray jsonArray = jsonObject["Entrances"].GetArray();
+            JsonArray jsonObject = JsonArray.Parse(jsonText);
+            //JsonArray jsonArray = jsonObject[""].GetArray();
 
-            foreach (JsonValue groupValue in jsonArray)
+           foreach (JsonValue groupValue in jsonObject)
             {
                _entrances.Add(this.parseEntrance(groupValue.GetObject()));
             }
@@ -64,8 +64,14 @@ namespace BolankaStats.Common
 
         private Entrance parseEntrance(JsonObject entranceObject)
         {
-            return new Entrance(entranceObject["UniqueId"].GetString(),
-            DateTime.Parse(entranceObject["Date"].GetString()), entranceObject["DeviceId"].GetString(), (int)entranceObject["PeopleNumber"].GetNumber(), entranceObject["Entered"].GetBoolean());
+            return new Entrance(entranceObject["id"].GetNumber().ToString(),
+            DateTime.Parse(entranceObject["date"].GetString()), 
+            //entranceObject["DeviceId"].GetString(), 
+            "1",
+            (int)entranceObject["swimmers"].GetNumber(), 
+            //(int)entranceObject["swimmers"].GetNumber(),
+            true
+            );
 
         }
 
