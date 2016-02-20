@@ -39,27 +39,39 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Row="0" Grid.Column="0">
-                    <DatePicker></DatePicker>
+                    <StackPanel>
+                        <TextBlock x:Uid="EntranceDate" FontSize="18"></TextBlock>
+                        <DatePicker></DatePicker>
+                    </StackPanel>
                 </Grid>
-                <Grid Grid.Row="0" Grid.Column="1">
-                    <TimePicker Time="0" ClockIdentifier="24HourClock" MinuteIncrement="0"></TimePicker>
-                </Grid>
+                
                 <Grid Grid.Row="1" Grid.Column="0">
-                    <DatePicker></DatePicker>
+                    <StackPanel>
+                        <TextBlock x:Uid="EntranceTime" FontSize="18"></TextBlock>
+                        <TimePicker Time="0" ClockIdentifier="24HourClock" MinuteIncrement="0"></TimePicker>
+                    </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
-                    <TextBox InputScope="Number"></TextBox>
+                    <StackPanel>
+                        <TextBlock x:Uid="EntrancePeople" FontSize="18"></TextBlock>
+                        <TextBox InputScope="Number"></TextBox>
+                    </StackPanel>
                 </Grid>
-                <Grid Grid.Row="3" Grid.Column="0">
-                    <Button>Byłem</Button>
-                </Grid>
-                <Grid Grid.Row="3" Grid.Column="1">
-                    <Button>Nie byłem</Button>
-                </Grid>
+                
             </Grid>
         </Grid>
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar IsSticky="True" x:Name="appBar">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Icon="Like"/>
+                <AppBarButton Icon="Dislike"/>
+            </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Cancel"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

@@ -274,4 +274,13 @@
   <data name="NavigationFailedExceptionMessage" xml:space="preserve">
     <value>Navigation failed.</value>
   </data>
+  <data name="EntranceDate.Text" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="EntrancePeople.Text" xml:space="preserve">
+    <value>Number of people</value>
+  </data>
+  <data name="EntranceTime.Text" xml:space="preserve">
+    <value>Time</value>
+  </data>
 </root>
