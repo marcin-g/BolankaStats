@@ -34,10 +34,9 @@ namespace BolankaStats.Common
         }
         private async Task GetEntrancesData(string pattern = "")
         {
-            string entrancesResults=await this.getResponse("getEntrances");
+            string entrancesResults=await this.getResponse("");
             _entrances = new ObservableCollection<Entrance>();
-            JsonObject jsonObject = JsonObject.Parse(entrancesResults);
-            JsonArray jsonArray = jsonObject["success"].GetArray();
+            JsonArray jsonArray = JsonArray.Parse(entrancesResults);
             foreach (JsonValue entranceValue in jsonArray)
             {
                 _entrances.Add(this.parseEntrance(entranceValue.GetObject()));
@@ -77,9 +76,21 @@ namespace BolankaStats.Common
 
         public async Task<IEnumerable<Entrance>> GetEntrances()
         {
-            await this.GetSampleDataAsync();
-
+            //await this.GetSampleDataAsync();
+            await this.GetEntrancesData();
             return this.Entrances;
         }
+
+        public async Task<string> PostEntrance(Entrance entrance) { 
+            var content = new FormUrlEncodedContent(new Dictionary<string, string>
+                {
+                   { "swimmers", entrance.PeopleNumber.ToString() },
+                   { "date", String.Format("{0:u}", entrance.Date) },
+                   { "device_id", entrance.DeviceId }
+                });
+            var response = await _client.PostAsync(ENDPOINT, content);
+            return null;
+        }
+
     }
 }

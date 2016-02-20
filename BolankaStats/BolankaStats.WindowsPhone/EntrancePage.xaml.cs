@@ -1,4 +1,5 @@
 ﻿using BolankaStats.Common;
+using BolankaStats.DataModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,6 +36,7 @@ namespace BolankaStats
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            EntranceTimePicker.Time = DateTime.Now.TimeOfDay;
         }
 
         /// <summary>
@@ -107,5 +109,15 @@ namespace BolankaStats
         }
 
         #endregion
+
+        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime date = EntranceDatePicker.Date.Date.AddHours(EntranceTimePicker.Time.Hours);
+            int people =Int32.Parse(NumberOfPeople.Text);
+            Entrance entrance = new Entrance(date, people, true);
+            StatsClient client = new StatsClient();
+            await client.PostEntrance(entrance);
+            Frame.GoBack();
+        }
     }
 }

@@ -42,21 +42,21 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Row="0" Grid.Column="0">
                     <StackPanel>
-                        <TextBlock x:Uid="EntranceDate" FontSize="18"></TextBlock>
-                        <DatePicker></DatePicker>
+                        <TextBlock Name="EntranceDate" x:Uid="EntranceDate" FontSize="18"></TextBlock>
+                        <DatePicker Name="EntranceDatePicker"></DatePicker>
                     </StackPanel>
                 </Grid>
                 
                 <Grid Grid.Row="1" Grid.Column="0">
                     <StackPanel>
                         <TextBlock x:Uid="EntranceTime" FontSize="18"></TextBlock>
-                        <TimePicker Time="0" ClockIdentifier="24HourClock" MinuteIncrement="0"></TimePicker>
+                        <TimePicker Name="EntranceTimePicker"  Time="0" ClockIdentifier="24HourClock" MinuteIncrement="0"></TimePicker>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
                     <StackPanel>
                         <TextBlock x:Uid="EntrancePeople" FontSize="18"></TextBlock>
-                        <TextBox InputScope="Number"></TextBox>
+                        <TextBox Text="0" Name="NumberOfPeople" InputScope="Number"></TextBox>
                     </StackPanel>
                 </Grid>
                 
@@ -66,8 +66,8 @@
     <Page.BottomAppBar>
         <CommandBar IsSticky="True" x:Name="appBar">
             <CommandBar.PrimaryCommands>
-                <AppBarButton Icon="Like"/>
-                <AppBarButton Icon="Dislike"/>
+                <AppBarButton Icon="Go" Click="AppBarButton_Click" />
+                <AppBarButton Icon="Home"/>
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="Cancel"/>
