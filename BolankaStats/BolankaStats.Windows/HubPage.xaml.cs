@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using BolankaStats.Data;
 using BolankaStats.Common;
+using BolankaStats.DataModel;
 
 // The Universal Hub Application project template is documented at http://go.microsoft.com/fwlink/?LinkID=391955
 
@@ -26,6 +27,7 @@ namespace BolankaStats
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private StatsClient client = new StatsClient();
 
         /// <summary>
         /// Gets the NavigationHelper used to aid in navigation and process lifetime management.
@@ -66,6 +68,9 @@ namespace BolankaStats
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
             var sampleDataGroup = await SampleDataSource.GetGroupAsync("Group-4");
             this.DefaultViewModel["Section3Items"] = sampleDataGroup;
+            var entrances = await client.GetEntrances();
+            this.DefaultViewModel["Entrances"] = entrances;
+            ((TimePicker)this.FindChildControl<TimePicker>(this, "EntranceTimePicker")).Time=DateTime.Now.TimeOfDay;
         }
 
         /// <summary>
@@ -115,5 +120,50 @@ namespace BolankaStats
         }
 
         #endregion
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {            
+            DateTime date = ((DatePicker)this.FindChildControl<DatePicker>(this,"EntranceDatePicker")).Date.Date.AddHours(((TimePicker)this.FindChildControl<TimePicker>(this,"EntranceTimePicker")).Time.Hours);
+            int people = Int32.Parse(((TextBox)this.FindChildControl<TextBox>(this, "NumberOfPeople")).Text);
+            Entrance entrance = new Entrance(date, people, ((Button)sender).Name == "InButton" ? true : false);
+            StatsClient client = new StatsClient();
+            await client.PostEntrance(entrance);
+            ((Grid)this.FindChildControl<Grid>(this, "AddForm")).Visibility = Visibility.Collapsed;
+            ((StackPanel)this.FindChildControl<StackPanel>(this, "PostAdd")).Visibility = Visibility.Visible;
+            var entrances = await client.GetEntrances();
+            this.DefaultViewModel["Entrances"] = entrances;
+            this.UpdateLayout();
+        }
+        private DependencyObject FindChildControl<T>(DependencyObject control, string ctrlName)
+        {
+            int childNumber = VisualTreeHelper.GetChildrenCount(control);
+            for (int i = 0; i < childNumber; i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(control, i);
+                FrameworkElement fe = child as FrameworkElement;
+                // Not a framework element or is null
+                if (fe == null) return null;
+
+                if (child is T && fe.Name == ctrlName)
+                {
+                    // Found the control so return
+                    return child;
+                }
+                else
+                {
+                    // Not found it - search children
+                    DependencyObject nextLevel = FindChildControl<T>(child, ctrlName);
+                    if (nextLevel != null)
+                        return nextLevel;
+                }
+            }
+            return null;
+        }
+
+        private void AddNext_Click(object sender, RoutedEventArgs e)
+        {
+            ((Grid)this.FindChildControl<Grid>(this, "AddForm")).Visibility = Visibility.Visible;
+            ((StackPanel)this.FindChildControl<StackPanel>(this, "PostAdd")).Visibility = Visibility.Collapsed;
+        }
     }
 }
