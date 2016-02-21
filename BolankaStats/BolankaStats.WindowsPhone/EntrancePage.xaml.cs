@@ -114,9 +114,14 @@ namespace BolankaStats
         {
             DateTime date = EntranceDatePicker.Date.Date.AddHours(EntranceTimePicker.Time.Hours);
             int people =Int32.Parse(NumberOfPeople.Text);
-            Entrance entrance = new Entrance(date, people, true);
+            Entrance entrance = new Entrance(date, people, ((AppBarButton)sender).Name == "GoButton" ? true : false);
             StatsClient client = new StatsClient();
             await client.PostEntrance(entrance);
+            Frame.GoBack();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
             Frame.GoBack();
         }
     }

@@ -8,6 +8,7 @@
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     d:DataContext="{Binding Source={d:DesignData Source=../BolankaStats.Shared/DataModel/SampleData.json, Type=data:SampleDataSource}}"
     xmlns:data="using:BolankaStats.Data"
+    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -71,10 +72,15 @@
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot">
-        <Hub x:Name="Hub" x:Uid="Hub" Header="application name" Background="{ThemeResource HubBackgroundImageBrush}">
-            <HubSection x:Uid="HubSection1" Header="SECTION 1"  HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
+        <Hub x:Name="Hub" x:Uid="Hub" Background="{ThemeResource HubBackgroundImageBrush}">
+            <HubSection x:Uid="HubSection1" DataContext="{Binding Entrances}" Header="SECTION 1"  HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
-           
+                    <Charting:Chart >
+                        <Charting:ColumnSeries 
+                            ItemsSource="{Binding}" DependentValueBinding="{Binding PeopleNumber}" IndependentValueBinding="{Binding DayOfWeek}">
+                        
+                        </Charting:ColumnSeries>
+                    </Charting:Chart>
                 </DataTemplate>
                         <!--DataTemplate>
                     <ListView
@@ -107,8 +113,8 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="0,0,0,19">
-                                    <TextBlock Text="{Binding DeviceId}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
-                                    <TextBlock Text="{Binding PeopleNumber}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+                                    <TextBlock Text="{Binding PeopleNumber}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
+                                    <TextBlock Text="{Binding Date}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>

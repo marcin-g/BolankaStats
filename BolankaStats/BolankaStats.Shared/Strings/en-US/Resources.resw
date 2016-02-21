@@ -251,10 +251,10 @@
     <value>Quisque in porta lorem dolor amet sed consectetuer ising elit, sed diam non my nibh uis mod wisi quip.</value>
   </data>
   <data name="Header.Text" xml:space="preserve">
-    <value>application name</value>
+    <value>Bolanka Stats</value>
   </data>
   <data name="Hub.Header" xml:space="preserve">
-    <value>application name</value>
+    <value>Bolanka Stats</value>
   </data>
   <data name="HubSection1" xml:space="preserve">
     <value>SECTION 1</value>
@@ -274,8 +274,17 @@
   <data name="NavigationFailedExceptionMessage" xml:space="preserve">
     <value>Navigation failed.</value>
   </data>
+  <data name="CancelButton.Label" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="EntranceAppName.Text" xml:space="preserve">
+    <value>Bolanka Stats</value>
+  </data>
   <data name="EntranceDate.Text" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="EntrancePageName.Text" xml:space="preserve">
+    <value>Add Entrance</value>
   </data>
   <data name="EntrancePeople.Text" xml:space="preserve">
     <value>Number of people</value>
