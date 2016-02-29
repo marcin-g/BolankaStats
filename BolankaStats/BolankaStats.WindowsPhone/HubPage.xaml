@@ -72,34 +72,75 @@
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot">
-        <Hub x:Name="Hub" x:Uid="Hub" Background="{ThemeResource HubBackgroundImageBrush}">
-            <HubSection x:Uid="HubSection1" DataContext="{Binding Entrances}" Header="SECTION 1"  HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
+        <Hub x:Name="Hub" x:Uid="Hub" Background="{ThemeResource HubBackgroundImageBrush}" SectionsInViewChanged="Hub_SectionsInViewChanged">
+            <HubSection x:Uid="NewEntranceSection" Name="NewEntranceSection" Header="New entrance"
+                        HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
+                <DataTemplate>
+                    <Grid Grid.Row="1" x:Name="AddEntranceRoot" Margin="19,9.5,19,0">
+                        <Grid x:Name="AddForm">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="0" Grid.Column="0">
+                                <StackPanel>
+                                    <TextBlock Name="EntranceDate" x:Uid="EntranceDate" FontSize="18"></TextBlock>
+                                    <DatePicker Name="EntranceDatePicker"></DatePicker>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="1" Grid.Column="0">
+                                <StackPanel>
+                                    <TextBlock x:Uid="EntranceTime" FontSize="18"></TextBlock>
+                                    <TimePicker Name="EntranceTimePicker"  Time="0" ClockIdentifier="24HourClock" MinuteIncrement="0"></TimePicker>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <StackPanel>
+                                    <TextBlock x:Uid="EntrancePeople" FontSize="18"></TextBlock>
+                                    <TextBox Text="0" Name="NumberOfPeople" InputScope="Number"></TextBox>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+
+                        <Grid x:Name="AddNext" Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" FontSize="30" Text="Entrance added"></TextBlock>
+                            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" FontSize="18" Text="Click below icon to add next entrance"></TextBlock>
+
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </HubSection>
+            <HubSection x:Uid="DayOfWeekSection" DataContext="{Binding Entrances}" Header="SECTION 1"  HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
                     <Charting:Chart >
+                        <Charting:Chart.LegendStyle>
+                            <Style TargetType="Control">
+                                <Setter Property="Width" Value="0"/>
+                                <Setter Property="Height" Value="0"/>
+                            </Style>
+                        </Charting:Chart.LegendStyle>
                         <Charting:ColumnSeries 
                             ItemsSource="{Binding}" DependentValueBinding="{Binding PeopleNumber}" IndependentValueBinding="{Binding DayOfWeek}">
-                        
+
                         </Charting:ColumnSeries>
                     </Charting:Chart>
                 </DataTemplate>
-                        <!--DataTemplate>
-                    <ListView
-                        ItemsSource="{Binding Items}"
-                        IsItemClickEnabled="True"
-                        ItemClick="GroupSection_ItemClick"
-                        ContinuumNavigationTransitionInfo.ExitElementContainer="True">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,0,0,27.5">
-                                    <TextBlock Text="{Binding Title}" Style="{ThemeResource ListViewItemTextBlockStyle}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </DataTemplate-->
-                
+
             </HubSection>
-            <HubSection x:Uid="HubSection4" Header="SECTION Test"
+            <HubSection x:Uid="ListSection" Header="SECTION Test"
                         DataContext="{Binding Entrances}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
                     <ListView 
@@ -121,90 +162,56 @@
                     </ListView>
                 </DataTemplate>
             </HubSection>
-            <HubSection x:Uid="HubSection2" Header="SECTION 2" Width="Auto"
-                         DataContext="{Binding Groups[0]}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
+            <HubSection x:Uid="SingleDaySection" Header="SECTION 2" Width="Auto" VerticalContentAlignment="Stretch"
+                          DataContext="{Binding DayEntrances}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
-                    <GridView
-                        Margin="0,9.5,0,0"
-                        ItemsSource="{Binding Items}"
-                        AutomationProperties.AutomationId="ItemGridView"
-                        AutomationProperties.Name="Items In Group"
-                        ItemTemplate="{StaticResource Standard200x180TileItemTemplate}"
-                        SelectionMode="None"
-                        IsItemClickEnabled="True"
-                        ItemClick="ItemView_ItemClick"
-                        ContinuumNavigationTransitionInfo.ExitElementContainer="True">
-                        <GridView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsWrapGrid />
-                            </ItemsPanelTemplate>
-                        </GridView.ItemsPanel>
-                    </GridView>
-                </DataTemplate>
-            </HubSection>
+                    <Grid Height="Auto" Name="stackPanel1" Width="Auto">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <ComboBox SelectionChanged="ComboBox_SelectionChanged" Grid.Row="0">
+                            <TextBlock Name="Monday" Text="Monday"/>
+                            <TextBlock Name="Tuesday" Text="Tuesday"/>
+                            <TextBlock Name="Wednesday" Text="Wednesday"/>
+                            <TextBlock Name="Thursday" Text="Thursday"/>
+                            <TextBlock Name="Friday" Text="Friday"/>
+                            <TextBlock Name="Saturday" Text="Saturday"/>
+                            <TextBlock Name="Sunday" Text="Sunday"/>
+                        </ComboBox>
+                        <Charting:Chart Grid.Row="1">
+                            <Charting:Chart.LegendStyle>
+                                <Style TargetType="Control">
+                                    <Setter Property="Width" Value="0"/>
+                                    <Setter Property="Height" Value="0"/>
+                                </Style>
+                            </Charting:Chart.LegendStyle>
 
-            <HubSection x:Uid="HubSection3" Header="SECTION 3"
-                        DataContext="{Binding Groups[1]}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
-                <DataTemplate>
-                    <ListView 
-                        AutomationProperties.AutomationId="ItemListViewSection3"
-                        AutomationProperties.Name="Items In Group"
-                        SelectionMode="None"
-                        IsItemClickEnabled="True"
-                        ItemsSource="{Binding Items}"
-                        ItemTemplate="{StaticResource StandardTripleLineItemTemplate}"
-                        ItemClick="ItemView_ItemClick"
-                        ContinuumNavigationTransitionInfo.ExitElementContainer="True">
-                    </ListView>
-                </DataTemplate>
-            </HubSection>
+                            <Charting:ColumnSeries 
+                                ItemsSource="{Binding}" IndependentValueBinding="{Binding Hour}" DependentValueBinding="{Binding PeopleNumber}"> 
 
-            <HubSection x:Uid="HubSection4" Header="SECTION 4"
-                        DataContext="{Binding Groups[2]}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
-                <DataTemplate>
-                    <ListView 
-                        AutomationProperties.AutomationId="ItemListViewSection4"
-                        AutomationProperties.Name="Items In Group"
-                        SelectionMode="None"
-                        IsItemClickEnabled="True"
-                        ItemsSource="{Binding Items}"
-                        ItemClick="ItemView_ItemClick"
-                        ContinuumNavigationTransitionInfo.ExitElementContainer="True">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,0,0,19">
-                                    <TextBlock Text="{Binding Title}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
-                                    <TextBlock Text="{Binding Subtitle}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </DataTemplate>
-            </HubSection>
-            
-            
+                                <Charting:ColumnSeries.DataPointStyle>
+                                    <Style TargetType="Charting:ColumnDataPoint">
+                                        <Setter Property="Background" Value="#ff217346"/>
+                                        <Setter Property="BorderBrush" Value="#ff217346" />
+                                        <Setter Property="BorderThickness" Value="1" />
 
-            <HubSection x:Uid="HubSection5" Header="SECTION 5"
-                        DataContext="{Binding Groups[3]}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
-                <DataTemplate>
-                    <ListView 
-                        AutomationProperties.AutomationId="ItemListViewSection5"
-                        AutomationProperties.Name="Items In Group"
-                        SelectionMode="None"
-                        IsItemClickEnabled="True"
-                        ItemsSource="{Binding Items}"
-                        ItemTemplate="{StaticResource StandardDoubleLineItemTemplate}"
-                        ItemClick="ItemView_ItemClick"
-                        ContinuumNavigationTransitionInfo.ExitElementContainer="True">
-                    </ListView>
+                                    </Style>
+                                </Charting:ColumnSeries.DataPointStyle>
+
+                            </Charting:ColumnSeries>
+                        </Charting:Chart>
+                    </Grid>
                 </DataTemplate>
-            </HubSection>
+            </HubSection>        
         </Hub>
     </Grid>
     <Page.BottomAppBar>
-        <CommandBar IsSticky="True" x:Name="appBar">
+        <CommandBar IsSticky="True" Name="AppBar" ClosedDisplayMode="Compact">
             <CommandBar.PrimaryCommands>
-                <AppBarButton Icon="Add" Click="AppBarButton_Click" />
+                <AppBarButton Name="GoButton" Icon="Go" Click="AppBarButton_Click" />
+                <AppBarButton Name="QuitButton" Icon="Home"  Click="AppBarButton_Click"/>
+                <AppBarButton Name="AddButton" Icon="Add"  Click="AddButtom_Click" Visibility="Collapsed"/>
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="Help"/>

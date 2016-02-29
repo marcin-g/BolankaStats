@@ -1,6 +1,6 @@
 ﻿using BolankaStats.Common;
 using BolankaStats.Data;
-
+using BolankaStats.DataModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -81,9 +81,14 @@ namespace BolankaStats
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
             var sampleDataGroups = await SampleDataSource.GetGroupsAsync();
+            var entrances = await client.GetEntrances();
+            var dayEntrances = await client.GetTodayEntrances();
             this.DefaultViewModel["Groups"] = sampleDataGroups;
-            var entrances = await client.GetEntrances(); 
+          //  this.DefaultViewModel["DayEntrances"] = dayEntrances;
             this.DefaultViewModel["Entrances"] = entrances;
+            System.Diagnostics.Debug.WriteLine(DateTime.Now.DayOfWeek.ToString().ToLower());
+            System.Diagnostics.Debug.WriteLine(dayEntrances.Count());
+            ((TimePicker)CommonHelper.FindChildControl<TimePicker>(this, "EntranceTimePicker")).Time = DateTime.Now.TimeOfDay;
         }
 
         /// <summary>
@@ -153,9 +158,69 @@ namespace BolankaStats
 
         #endregion
 
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Frame.Navigate(typeof(EntrancePage));
+
+           var dayEntrances = await client.GetEntrancesByDay(((TextBlock)((ComboBox)sender).SelectedItem).Name.ToLower());
+            System.Diagnostics.Debug.WriteLine("elo");
+            System.Diagnostics.Debug.WriteLine(dayEntrances);
+            System.Diagnostics.Debug.WriteLine(((TextBlock)((ComboBox)sender).SelectedItem).Name.ToLower());
+            this.DefaultViewModel["DayEntrances"] = dayEntrances;
+        }
+
+        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+           
+            DateTime date = ((DatePicker)CommonHelper.FindChildControl<DatePicker>(this, "EntranceDatePicker")).Date.Date.AddHours(((TimePicker)CommonHelper.FindChildControl<TimePicker>(this, "EntranceTimePicker")).Time.Hours);
+            int people = Int32.Parse(((TextBox)CommonHelper.FindChildControl<TextBox>(this, "NumberOfPeople")).Text);
+            Entrance entrance = new Entrance(date, people, ((AppBarButton)sender).Name == "GoButton" ? true : false);
+            ((Grid)CommonHelper.FindChildControl<Grid>(this, "AddForm")).Visibility = Visibility.Collapsed;
+            ((Grid)CommonHelper.FindChildControl<Grid>(this, "AddNext")).Visibility = Visibility.Visible;
+            AddButton.Visibility = Visibility.Visible;
+            GoButton.Visibility = Visibility.Collapsed;
+            QuitButton.Visibility = Visibility.Collapsed;
+            await client.PostEntrance(entrance);
+
+        }
+
+        private void AddButtom_Click(object sender, RoutedEventArgs e)
+        {
+            ((TextBox)CommonHelper.FindChildControl<TextBox>(this, "NumberOfPeople")).Text="0";
+            ((Grid)CommonHelper.FindChildControl<Grid>(this, "AddForm")).Visibility = Visibility.Visible;
+            ((Grid)CommonHelper.FindChildControl<Grid>(this, "AddNext")).Visibility = Visibility.Collapsed;
+            AddButton.Visibility = Visibility.Collapsed;
+            GoButton.Visibility = Visibility.Visible;
+            QuitButton.Visibility = Visibility.Visible;
+
+        }
+
+    
+
+        private void Hub_SectionsInViewChanged(object sender, SectionsInViewChangedEventArgs e)
+        {
+            
+            if (Hub.SectionsInView[0] != null && Hub.SectionsInView[0].Name == "NewEntranceSection")
+             { 
+                 if (((Grid)CommonHelper.FindChildControl<Grid>(this, "AddForm")).Visibility == Visibility.Visible) {
+                     AddButton.Visibility = Visibility.Collapsed;
+                     GoButton.Visibility = Visibility.Visible;
+                     QuitButton.Visibility = Visibility.Visible;
+                 }
+                 else
+                 {
+                     AddButton.Visibility = Visibility.Visible;
+                     GoButton.Visibility = Visibility.Collapsed;
+                     QuitButton.Visibility = Visibility.Collapsed;
+                 }
+                AppBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
+             }
+             else if (Hub.SectionsInView[0] != null && Hub.SectionsInView[0].Name != "NewEntranceSection")
+            {
+                 AddButton.Visibility = Visibility.Collapsed;
+                 GoButton.Visibility = Visibility.Collapsed;
+                 QuitButton.Visibility = Visibility.Collapsed;
+                AppBar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
+            }
         }
     }
 }
