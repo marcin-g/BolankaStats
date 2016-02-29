@@ -112,7 +112,7 @@
 
                     <Charting:Chart HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                         <Charting:ColumnSeries 
-                            ItemsSource="{Binding}" DependentValueBinding="{Binding PeopleNumber}" IndependentValueBinding="{Binding DayOfWeek}">
+                            ItemsSource="{Binding}" DependentValueBinding="{Binding PeopleNumber}" IndependentValueBinding="{Binding Date.DayAOfWeek}">
                         </Charting:ColumnSeries>
                     </Charting:Chart>
                 </DataTemplate>
