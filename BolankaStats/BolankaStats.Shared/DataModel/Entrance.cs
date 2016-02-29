@@ -10,6 +10,7 @@ namespace BolankaStats.DataModel
         public string UniqueId { get; private set; }
         public DateTime Date { get; private set; }
         public DayOfWeek DayOfWeek { get; private set; }
+        public string Hour { get; private set; }
         public string DeviceId { get; private set; }
         public int PeopleNumber{ get; private set; }
         public bool Entered{ get; private set; }
@@ -22,6 +23,7 @@ namespace BolankaStats.DataModel
             this.PeopleNumber = PeopleNumber;
             this.Entered = Entered;
             this.DayOfWeek = Date.DayOfWeek;
+            this.Hour = Date.ToString("HH:mm");
         }
         public Entrance(DateTime Date, int PeopleNumber, bool Entered)
         {
@@ -31,6 +33,7 @@ namespace BolankaStats.DataModel
             this.PeopleNumber = PeopleNumber;
             this.Entered = Entered;
             this.DayOfWeek = Date.DayOfWeek;
+            this.Hour = Date.ToString("HH:mm");
         }
     }
 }
