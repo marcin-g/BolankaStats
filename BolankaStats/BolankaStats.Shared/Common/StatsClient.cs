@@ -27,20 +27,23 @@ namespace BolankaStats.Common
             var response = await _client.GetAsync(ENDPOINT+'/'+method);
             if (response.IsSuccessStatusCode)
             {
+                System.Diagnostics.Debug.WriteLine("Response successfull");
                 var responseString = await response.Content.ReadAsStringAsync();
                 return responseString;
             }
+            System.Diagnostics.Debug.WriteLine(response);
             return null;
         }
-        private async Task GetEntrancesData(string pattern = "")
+        private async Task<IEnumerable<Entrance>> GetEntrancesData(string pattern = "")
         {
-            string entrancesResults=await this.getResponse("");
-            _entrances = new ObservableCollection<Entrance>();
+            string entrancesResults=await this.getResponse(pattern);
+            var entrances = new ObservableCollection<Entrance>();
             JsonArray jsonArray = JsonArray.Parse(entrancesResults);
             foreach (JsonValue entranceValue in jsonArray)
             {
-                _entrances.Add(this.parseEntrance(entranceValue.GetObject()));
+                entrances.Add(this.parseEntrance(entranceValue.GetObject()));
             }
+            return entrances;
         }
 
         private async Task GetSampleDataAsync()
@@ -77,8 +80,19 @@ namespace BolankaStats.Common
         public async Task<IEnumerable<Entrance>> GetEntrances()
         {
             //await this.GetSampleDataAsync();
-            await this.GetEntrancesData();
-            return this.Entrances;
+            return await GetEntrancesData();
+        }
+        public async Task<IEnumerable<Entrance>> GetEntrancesByDay(string dayOfWeek)
+        {
+            //await this.GetSampleDataAsync();
+            return await GetEntrancesData("on/"+dayOfWeek.ToLower());
+          
+        }
+        public async Task<IEnumerable<Entrance>> GetTodayEntrances()
+        {
+            //await this.GetSampleDataAsync();
+            return await GetEntrancesData("today");
+
         }
 
         public async Task<string> PostEntrance(Entrance entrance) { 
