@@ -28,6 +28,31 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
+
+
+        <DataTemplate x:Key="EntranceTemplate">
+            <Grid Width="350" Height="350">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding DayOfWeek}" FontSize="20" Grid.Row="0"/>
+                <Charting:Chart HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="1">
+                    <Charting:ColumnSeries 
+                                ItemsSource="{Binding DayEntrances}" IndependentValueBinding="{Binding Hour}" DependentValueBinding="{Binding PeopleNumber}">
+
+                        <Charting:ColumnSeries.DataPointStyle>
+                        <Style TargetType="Charting:ColumnDataPoint">
+                            <Setter Property="Background" Value="#ff217346"/>
+                            <Setter Property="BorderBrush" Value="#ff217346" />
+                            <Setter Property="BorderThickness" Value="1" />
+
+                        </Style>
+                    </Charting:ColumnSeries.DataPointStyle>
+                    </Charting:ColumnSeries>
+                </Charting:Chart>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
 
     <!--
@@ -107,12 +132,11 @@
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
-            <HubSection Width="500" x:Uid="Section1Header" Header="Section 1"  DataContext="{Binding Entrances}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <HubSection Width="500" x:Uid="Section1Header" Header="Section 1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 <DataTemplate>
-
                     <Charting:Chart HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                         <Charting:ColumnSeries 
-                            ItemsSource="{Binding}" DependentValueBinding="{Binding PeopleNumber}" IndependentValueBinding="{Binding Date.DayAOfWeek}">
+                            ItemsSource="{Binding Entrances}" DependentValueBinding="{Binding PeopleNumber}" IndependentValueBinding="{Binding DayOfWeek}">
                         </Charting:ColumnSeries>
                     </Charting:Chart>
                 </DataTemplate>
@@ -134,7 +158,19 @@
                     </ListView>
                 </DataTemplate>
             </HubSection>
-            <HubSection IsHeaderInteractive="True" DataContext="{Binding Section3Items}" d:DataContext="{Binding Groups[3], Source={d:DesignData Source=../BolankaStats.Shared/DataModel/SampleData.json, Type=data:SampleDataSource}}"
+            <HubSection x:Uid="ListSection" Header="SECTION Test"
+                        DataContext="{Binding EntrancesPerDay}">
+                <DataTemplate>
+                    <GridView 
+                        AutomationProperties.AutomationId="ItemGridView"
+                        AutomationProperties.Name="Items In Group"
+                        SelectionMode="None"
+                        ItemTemplate="{StaticResource EntranceTemplate}"
+                        ItemsSource="{Binding}">
+                    </GridView>
+                </DataTemplate>
+            </HubSection>
+            <!--HubSection IsHeaderInteractive="True" DataContext="{Binding Section3Items}" d:DataContext="{Binding Groups[3], Source={d:DesignData Source=../BolankaStats.Shared/DataModel/SampleData.json, Type=data:SampleDataSource}}"
                         x:Uid="Section3Header" Header="Section 3" Padding="40,40,40,32">
                 <DataTemplate>
                     <GridView
@@ -153,7 +189,6 @@
             </HubSection>
             <HubSection x:Uid="Section4Header" Header="Section 4">
                 <DataTemplate>
-                    <!-- width of 400 -->
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -180,7 +215,7 @@
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
-            </HubSection>
+            </HubSection-->
         </Hub>
     </Grid>
 </Page>

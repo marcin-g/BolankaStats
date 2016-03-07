@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using BolankaStats.Data;
 using BolankaStats.Common;
 using BolankaStats.DataModel;
+using System.Collections;
 
 // The Universal Hub Application project template is documented at http://go.microsoft.com/fwlink/?LinkID=391955
 
@@ -70,6 +71,20 @@ namespace BolankaStats
             this.DefaultViewModel["Section3Items"] = sampleDataGroup;
             var entrances = await client.GetEntrances();
             this.DefaultViewModel["Entrances"] = entrances;
+
+            List<EntrancesByDay> entracesPerDay = new List<EntrancesByDay>();
+            var saturday = await client.GetEntrancesByDay("Saturday");
+            var sunday = await client.GetEntrancesByDay("Sunday");
+            entracesPerDay.Add(new EntrancesByDay("Tuesday", saturday));
+            entracesPerDay.Add(new EntrancesByDay("Wednsday", saturday));
+            entracesPerDay.Add(new EntrancesByDay("Thursday", saturday));
+            entracesPerDay.Add(new EntrancesByDay("Friday", saturday));
+            entracesPerDay.Add(new EntrancesByDay("Saturday", saturday));
+            entracesPerDay.Add(new EntrancesByDay("Sunday", sunday));
+            System.Diagnostics.Debug.WriteLine("entracesPerDay");
+            System.Diagnostics.Debug.WriteLine("Saturday "+ saturday);
+            System.Diagnostics.Debug.WriteLine(entracesPerDay);
+            this.DefaultViewModel["EntrancesPerDay"] = entracesPerDay;
             ((TimePicker)CommonHelper.FindChildControl<TimePicker>(this, "EntranceTimePicker")).Time=DateTime.Now.TimeOfDay;
         }
 
@@ -132,6 +147,14 @@ namespace BolankaStats
             ((StackPanel)CommonHelper.FindChildControl<StackPanel>(this, "PostAdd")).Visibility = Visibility.Visible;
             var entrances = await client.GetEntrances();
             this.DefaultViewModel["Entrances"] = entrances;
+            List < EntrancesByDay > entracesPerDay = new List<EntrancesByDay>();
+            var saturday = await client.GetEntrancesByDay("saturday");
+            var sunday = await client.GetEntrancesByDay("sunday");
+            entracesPerDay.Add(new EntrancesByDay("saturday", saturday));
+            entracesPerDay.Add(new EntrancesByDay("sunday", sunday));
+            System.Diagnostics.Debug.WriteLine("entracesPerDay");
+            System.Diagnostics.Debug.WriteLine(entracesPerDay);
+            this.DefaultViewModel["EntrancesPerDay"] = entracesPerDay;
             this.UpdateLayout();
         }    
 
