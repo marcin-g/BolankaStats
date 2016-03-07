@@ -188,7 +188,7 @@
                             </Charting:Chart.LegendStyle>
 
                             <Charting:ColumnSeries 
-                                ItemsSource="{Binding}" IndependentValueBinding="{Binding Hour}" DependentValueBinding="{Binding PeopleNumber}"> 
+                                ItemsSource="{Binding}" IndependentValueBinding="{Binding Hour}" DependentValueBinding="{Binding PeopleNumber}">
 
                                 <Charting:ColumnSeries.DataPointStyle>
                                     <Style TargetType="Charting:ColumnDataPoint">
@@ -203,14 +203,15 @@
                         </Charting:Chart>
                     </Grid>
                 </DataTemplate>
-            </HubSection>        
+            </HubSection>
         </Hub>
     </Grid>
     <Page.BottomAppBar>
-        <CommandBar IsSticky="True" Name="AppBar" ClosedDisplayMode="Compact">
+        <CommandBar IsSticky="True" Name="AppBar" ClosedDisplayMode="Compact" >
             <CommandBar.PrimaryCommands>
                 <AppBarButton Name="GoButton" Icon="Go" Click="AppBarButton_Click" />
                 <AppBarButton Name="QuitButton" Icon="Home"  Click="AppBarButton_Click"/>
+                <AppBarButton Name="InfoButton" Icon="Help"  Click="AppBarButton_Click" Visibility="Collapsed"/>
                 <AppBarButton Name="AddButton" Icon="Add"  Click="AddButtom_Click" Visibility="Collapsed"/>
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>

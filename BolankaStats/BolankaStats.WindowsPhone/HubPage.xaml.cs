@@ -205,21 +205,22 @@ namespace BolankaStats
                      AddButton.Visibility = Visibility.Collapsed;
                      GoButton.Visibility = Visibility.Visible;
                      QuitButton.Visibility = Visibility.Visible;
+                    InfoButton.Visibility = Visibility.Collapsed;
                  }
                  else
                  {
                      AddButton.Visibility = Visibility.Visible;
                      GoButton.Visibility = Visibility.Collapsed;
                      QuitButton.Visibility = Visibility.Collapsed;
-                 }
-                AppBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
+                    InfoButton.Visibility = Visibility.Collapsed;
+                }
              }
              else if (Hub.SectionsInView[0] != null && Hub.SectionsInView[0].Name != "NewEntranceSection")
             {
                  AddButton.Visibility = Visibility.Collapsed;
                  GoButton.Visibility = Visibility.Collapsed;
                  QuitButton.Visibility = Visibility.Collapsed;
-                AppBar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
+                InfoButton.Visibility = Visibility.Visible;
             }
         }
     }
