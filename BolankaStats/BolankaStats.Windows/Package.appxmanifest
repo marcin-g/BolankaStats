@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" IgnorableNamespaces= "uap mp">
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10586.0" MaxVersionTested="10.0.10586.0" />
+  </Dependencies>
   <Identity Name="20ab9c24-93bf-4ed4-aa9b-5520ef3a039d"
             Publisher="CN=Marcin"
             Version="1.0.0.0" />
@@ -10,11 +12,8 @@
     <PublisherDisplayName>Marcin</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-
-  <Prerequisites>
-    <OSMinVersion>6.3.0</OSMinVersion>
-    <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
-  </Prerequisites>
+  
+  <mp:PhoneIdentity PhoneProductId="aa3815a1-2d97-4c71-8c99-578135b28cd8" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Resources>
     <Resource Language="x-generate"/>
@@ -24,15 +23,14 @@
     <Application Id="App"
         Executable="$targetnametoken$.exe"
         EntryPoint="BolankaStats.Windows.App">
-        <m2:VisualElements
+        <uap:VisualElements
             DisplayName="BolankaStats.Windows"
             Square150x150Logo="Assets\Logo.png"
-            Square30x30Logo="Assets\SmallLogo.png"
+            Square44x44Logo="Assets\SmallLogo.png"
             Description="BolankaStats.Windows"
-            ForegroundText="light"
             BackgroundColor="#464646">
-            <m2:SplashScreen Image="Assets\SplashScreen.png" />
-        </m2:VisualElements>
+          <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        </uap:VisualElements>
     </Application>
   </Applications>
   <Capabilities>

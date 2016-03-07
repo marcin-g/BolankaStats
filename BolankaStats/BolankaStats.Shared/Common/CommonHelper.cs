@@ -14,7 +14,7 @@ namespace BolankaStats.Common
     {
         public static string DEVICE_ID;
         static CommonHelper()
-        {
+        {/*
             HardwareToken token = HardwareIdentification.GetPackageSpecificToken(null);
             IBuffer hardwareId = token.Id;
 
@@ -22,7 +22,7 @@ namespace BolankaStats.Common
             IBuffer hashed = hasher.HashData(hardwareId);
 
             string hashedString = CryptographicBuffer.EncodeToHexString(hashed);
-            DEVICE_ID=hashedString;
+            DEVICE_ID=hashedString;*/
         }
         public static DependencyObject FindChildControl<T>(DependencyObject control, string ctrlName)
         {
