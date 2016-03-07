@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\CommonHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\StatsClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\Entrance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataModel\EntrancesByDay.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\SampleDataSource.cs" />
     <Content Include="$(MSBuildThisFileDirectory)DataModel\EntranceData.json" />
     <Content Include="$(MSBuildThisFileDirectory)DataModel\SampleData.json" />

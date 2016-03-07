@@ -15,6 +15,8 @@ namespace BolankaStats.DataModel
         public int PeopleNumber{ get; private set; }
         public bool Entered{ get; private set; }
 
+        public static int MAX_PEOPLE { get; private set; }
+
         public Entrance(String UniqueId, DateTime Date, string DeviceId, int PeopleNumber, bool Entered)
         {
             this.UniqueId = UniqueId;
@@ -24,6 +26,10 @@ namespace BolankaStats.DataModel
             this.Entered = Entered;
             this.DayOfWeek = Date.DayOfWeek;
             this.Hour = Date.ToString("HH:mm");
+            if (MAX_PEOPLE < PeopleNumber)
+            {
+                MAX_PEOPLE = PeopleNumber;
+            }
         }
         public Entrance(DateTime Date, int PeopleNumber, bool Entered)
         {
@@ -34,6 +40,10 @@ namespace BolankaStats.DataModel
             this.Entered = Entered;
             this.DayOfWeek = Date.DayOfWeek;
             this.Hour = Date.ToString("HH:mm");
+            if (MAX_PEOPLE < PeopleNumber)
+            {
+                MAX_PEOPLE = PeopleNumber;
+            }
         }
     }
 }
