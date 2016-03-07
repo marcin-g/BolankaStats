@@ -188,3 +188,5 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 .vs/config/applicationhost.config
+Run_Upgrade_to_uwp.bat
+*.ps1
