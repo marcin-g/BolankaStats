@@ -1,36 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" IgnorableNamespaces= "uap mp">
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" IgnorableNamespaces="uap mp">
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10586.0" MaxVersionTested="10.0.10586.0" />
   </Dependencies>
-  <Identity Name="20ab9c24-93bf-4ed4-aa9b-5520ef3a039d"
-            Publisher="CN=Marcin"
-            Version="1.0.0.0" />
-
+  <Identity Name="20ab9c24-93bf-4ed4-aa9b-5520ef3a039d" Publisher="CN=Marcin" Version="1.0.0.0" />
   <Properties>
     <DisplayName>BolankaStats.Windows</DisplayName>
     <PublisherDisplayName>Marcin</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-  
-  <mp:PhoneIdentity PhoneProductId="aa3815a1-2d97-4c71-8c99-578135b28cd8" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
-
+  <mp:PhoneIdentity PhoneProductId="aa3815a1-2d97-4c71-8c99-578135b28cd8" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
-
   <Applications>
-    <Application Id="App"
-        Executable="$targetnametoken$.exe"
-        EntryPoint="BolankaStats.Windows.App">
-        <uap:VisualElements
-            DisplayName="BolankaStats.Windows"
-            Square150x150Logo="Assets\Logo.png"
-            Square44x44Logo="Assets\SmallLogo.png"
-            Description="BolankaStats.Windows"
-            BackgroundColor="#464646">
-          <uap:SplashScreen Image="Assets\SplashScreen.png" />
-        </uap:VisualElements>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="BolankaStats.Windows.App">
+      <uap:VisualElements DisplayName="BolankaStats.Windows" Square150x150Logo="Assets\Logo-150.png" Square44x44Logo="Assets\Logo-44.png" Description="BolankaStats.Windows" BackgroundColor="#42C0FB">
+        <uap:DefaultTile>
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen-100.png" BackgroundColor="#42C0FB" />
+      </uap:VisualElements>
     </Application>
   </Applications>
   <Capabilities>

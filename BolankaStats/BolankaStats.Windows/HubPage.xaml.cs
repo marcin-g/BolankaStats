@@ -16,6 +16,8 @@ using BolankaStats.Data;
 using BolankaStats.Common;
 using BolankaStats.DataModel;
 using System.Collections;
+using System.ComponentModel;
+using Windows.System.Profile;
 
 // The Universal Hub Application project template is documented at http://go.microsoft.com/fwlink/?LinkID=391955
 
@@ -29,6 +31,8 @@ namespace BolankaStats
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private StatsClient client = new StatsClient();
+        private static int HUB_SECTION_NUMBER = 4;
+        private static int HUB_SECTION_MARGIN = 10;
 
         /// <summary>
         /// Gets the NavigationHelper used to aid in navigation and process lifetime management.
@@ -51,20 +55,30 @@ namespace BolankaStats
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
+            switch (AnalyticsInfo.VersionInfo.DeviceFamily)
+            {
+                case "Windows.Mobile":
+                    this.DefaultViewModel["SectionWidth"] = Window.Current.Bounds.Width - HUB_SECTION_MARGIN;
+                    break;
+                default:
+                    this.DefaultViewModel["SectionWidth"] = Window.Current.Bounds.Width / HUB_SECTION_NUMBER - HUB_SECTION_MARGIN;
+                    break;
+            }
         }
-
-        /// <summary>
-        /// Populates the page with content passed during navigation.  Any saved state is also
-        /// provided when recreating a page from a prior session.
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event; typically <see cref="NavigationHelper"/>
-        /// </param>
-        /// <param name="e">Event data that provides both the navigation parameter passed to
-        /// <see cref="Frame.Navigate(Type, object)"/> when this page was initially requested and
-        /// a dictionary of state preserved by this page during an earlier
-        /// session.  The state will be null the first time a page is visited.</param>
-        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+       
+    
+    /// <summary>
+    /// Populates the page with content passed during navigation.  Any saved state is also
+    /// provided when recreating a page from a prior session.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event; typically <see cref="NavigationHelper"/>
+    /// </param>
+    /// <param name="e">Event data that provides both the navigation parameter passed to
+    /// <see cref="Frame.Navigate(Type, object)"/> when this page was initially requested and
+    /// a dictionary of state preserved by this page during an earlier
+    /// session.  The state will be null the first time a page is visited.</param>
+    private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
             var sampleDataGroup = await SampleDataSource.GetGroupAsync("Group-4");

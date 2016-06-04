@@ -14,15 +14,9 @@ namespace BolankaStats.Common
     {
         public static string DEVICE_ID;
         static CommonHelper()
-        {/*
-            HardwareToken token = HardwareIdentification.GetPackageSpecificToken(null);
-            IBuffer hardwareId = token.Id;
-
-            HashAlgorithmProvider hasher = HashAlgorithmProvider.OpenAlgorithm("MD5");
-            IBuffer hashed = hasher.HashData(hardwareId);
-
-            string hashedString = CryptographicBuffer.EncodeToHexString(hashed);
-            DEVICE_ID=hashedString;*/
+        {
+            var deviceInfo = new Windows.Security.ExchangeActiveSyncProvisioning.EasClientDeviceInformation();
+            DEVICE_ID = deviceInfo.FriendlyName;
         }
         public static DependencyObject FindChildControl<T>(DependencyObject control, string ctrlName)
         {

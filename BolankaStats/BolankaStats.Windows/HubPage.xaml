@@ -31,13 +31,16 @@
 
 
         <DataTemplate x:Key="EntranceTemplate">
-            <Grid Width="350" Height="350">
+            <Grid Width="300" Height="300">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBlock Text="{Binding DayOfWeek}" FontSize="20" Grid.Row="0"/>
-                <Charting:Chart HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding DayOfWeek}" FontSize="20" Grid.Row="0"  Grid.Column="0"/>
+                <Charting:Chart HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="1" Grid.Column="0">
                     <Charting:ColumnSeries 
                                 ItemsSource="{Binding DayEntrances}" IndependentValueBinding="{Binding Hour}" DependentValueBinding="{Binding PeopleNumber}">
 
@@ -69,23 +72,16 @@
                 <!-- Back button and page title -->
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button  x:Name="backButton" Style="{StaticResource NavigationBackButtonNormalStyle}"
-                        Margin="0,0,39,0" 
-                        VerticalAlignment="Top"
-                        Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
-                        AutomationProperties.Name="Add"
-                        AutomationProperties.AutomationId="BackButton"
-                        AutomationProperties.ItemType="Navigation Button" Grid.Column="0"/>
                     <TextBlock x:Name="pageTitle" x:Uid="Header" Text="application name" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         VerticalAlignment="Top" IsHitTestVisible="false" TextWrapping="NoWrap" />
                 </Grid>
             </Hub.Header>
-            <HubSection Width="300" Margin="0,0,80,0">
+            <HubSection  Margin="0,0,0,0" 
+                        Width="{Binding SectionWidth}" HorizontalContentAlignment="Center">
                 <HubSection.Background>
-                    <ImageBrush ImageSource="Assets/MediumGray.png" Stretch="UniformToFill" />
+                    <SolidColorBrush Color="#42C0FB"/>
                 </HubSection.Background>
                 <DataTemplate>
                     <StackPanel>
@@ -102,7 +98,7 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel  Grid.Row="0" Grid.Column="0" Margin="10,10,10,10">
                                 <TextBlock Margin="0,0,10,10" Name="EntranceDate" x:Uid="EntranceDate" FontSize="18"></TextBlock>
-                                <DatePicker Name="EntranceDatePicker"></DatePicker>
+                                <DatePicker Name="EntranceDatePicker" Width="auto"></DatePicker>
                             </StackPanel>
 
                             <StackPanel Grid.Row="1" Grid.Column="0" Margin="10,10,10,10">
@@ -132,20 +128,22 @@
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
-            <HubSection Width="500" x:Uid="Section1Header" Header="Section 1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <HubSection x:Uid="Section1Header" Header="Section 1" 
+                        Width="{Binding SectionWidth}" VerticalContentAlignment="Stretch"> 
                 <DataTemplate>
-                    <Charting:Chart HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <Charting:Chart Width="{Binding SectionWidth}" VerticalAlignment="Stretch">
                         <Charting:ColumnSeries 
-                            ItemsSource="{Binding Entrances}" DependentValueBinding="{Binding PeopleNumber}" IndependentValueBinding="{Binding DayOfWeek}">
+                            ItemsSource="{Binding Entrances}" DependentValueBinding="{Binding PeopleNumber}"  IndependentValueBinding="{Binding DayOfWeek}">
                         </Charting:ColumnSeries>
                     </Charting:Chart>
                 </DataTemplate>
             </HubSection>
-            <HubSection Width="520" x:Uid="Section2Header" Header="Section 2" DataContext="{Binding Entrances}">
+            <HubSection x:Uid="Section2Header" Header="Section 2" 
+                        Width="{Binding SectionWidth}">
                 <DataTemplate>
                     <ListView 
                         SelectionMode="None"
-                        ItemsSource="{Binding}"
+                        ItemsSource="{Binding Entrances}"
                         IsItemClickEnabled="True">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -159,63 +157,19 @@
                 </DataTemplate>
             </HubSection>
             <HubSection x:Uid="ListSection" Header="SECTION Test"
-                        DataContext="{Binding EntrancesPerDay}">
+                        MaxWidth="1000"
+                           VerticalContentAlignment="Stretch" >
                 <DataTemplate>
                     <GridView 
                         AutomationProperties.AutomationId="ItemGridView"
                         AutomationProperties.Name="Items In Group"
                         SelectionMode="None"
                         ItemTemplate="{StaticResource EntranceTemplate}"
-                        ItemsSource="{Binding}">
+                        ItemsSource="{Binding EntrancesPerDay}"
+                        VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
                     </GridView>
                 </DataTemplate>
-            </HubSection>
-            <!--HubSection IsHeaderInteractive="True" DataContext="{Binding Section3Items}" d:DataContext="{Binding Groups[3], Source={d:DesignData Source=../BolankaStats.Shared/DataModel/SampleData.json, Type=data:SampleDataSource}}"
-                        x:Uid="Section3Header" Header="Section 3" Padding="40,40,40,32">
-                <DataTemplate>
-                    <GridView
-                        x:Name="itemGridView"
-                        ItemsSource="{Binding Items}"
-                        Margin="-9,-14,0,0"
-                        AutomationProperties.AutomationId="ItemGridView"
-                        AutomationProperties.Name="Items In Group"
-                        ItemTemplate="{StaticResource Standard310x260ItemTemplate}"
-                        SelectionMode="None"
-                        IsSwipeEnabled="false"
-                        IsItemClickEnabled="True"
-                        ItemClick="ItemView_ItemClick">
-                    </GridView>
-                </DataTemplate>
-            </HubSection>
-            <HubSection x:Uid="Section4Header" Header="Section 4">
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="130"/>
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="130"/>
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="130"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="270"/>
-                                <RowDefinition Height="95"/>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Image Source="Assets/MediumGray.png" Grid.ColumnSpan="5" Margin="0,0,0,10" Stretch="Fill" />
-                            <Image Source="Assets/MediumGray.png" Grid.Row="1" Stretch="Fill"/>
-                            <Image Source="Assets/MediumGray.png" Grid.Row="1" Grid.Column="2" Stretch="Fill"/>
-                            <Image Source="Assets/MediumGray.png" Grid.Row="1" Grid.Column="4" Stretch="Fill"/>
-                            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Grid.Row="2" Grid.ColumnSpan="5"  Margin="0,15,0,0"
-                                       x:Uid="DescriptionHeader" Text="Description text:"/>
-                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Grid.Row="3" Grid.ColumnSpan="5"
-                                       x:Uid="LongText" Text="Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper. Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper."/>
-                        </Grid>
-                    </StackPanel>
-                </DataTemplate>
-            </HubSection-->
+            </HubSection>          
         </Hub>
     </Grid>
 </Page>
